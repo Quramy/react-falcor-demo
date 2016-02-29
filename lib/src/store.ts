@@ -1,12 +1,12 @@
 import {EventEmitter} from 'events';
-import * as falcor from 'falcor/browser';
+import * as Falcor from 'falcor';
 
 export interface StoreCreateParam {
     [key: string]: any;
     onChange?: Function;
 }
 
-export default class Store extends falcor.Model {
+export default class Store extends Falcor.Model {
     private emitter: EventEmitter;
     constructor(option: StoreCreateParam) {
         var opt: StoreCreateParam = option;
@@ -18,7 +18,7 @@ export default class Store extends falcor.Model {
         this.emitter = new EventEmitter();
     }
 
-    static createFromModel(rawModel: falcor.Model) {
+    static createFromModel(rawModel: Falcor.Model) {
         return new Store({
             source: rawModel.asDataSource()
         });

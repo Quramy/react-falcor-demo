@@ -24,5 +24,5 @@ const AppContainer = connectModel(App, store, {
     message: 'message'
 });
 
-render((<AppContainer />), document.getElementById('app'));
+render(<AppContainer />, document.getElementById('app'));
 
