@@ -33,8 +33,8 @@ export default class Store extends Falcor.Model {
     addChangeListener(query: string, onSuccess: (json: any) => any) {
         var handler = () => {
             this.get(query).then(res => {
-                if(res && res.json) {
-                    onSuccess(res.json);
+                if(res) {
+                    onSuccess(res);
                 }
             });
         };

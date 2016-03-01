@@ -73,6 +73,7 @@ class Container extends React.Component<{[propKey: string]: any}, ContainerState
                 var json = res.json;
                 var newState: ContainerState = {$loading: false};
                 var value: any;
+                if(!json) return;
                 if(typeof queryHolder.handler === 'function') {
                     value = queryHolder.handler(res);
                 }else{

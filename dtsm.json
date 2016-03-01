@@ -19,8 +19,8 @@
     "react/react-dom.d.ts": {
       "ref": "ab2462147a313f69e7118625cfcce21c005fa4af"
     },
-    "react-redux/react-redux.d.ts": {
-      "ref": "ab2462147a313f69e7118625cfcce21c005fa4af"
+    "flux/flux.d.ts": {
+      "ref": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
     }
   }
 }
