@@ -16,19 +16,19 @@ tsc -p lib
 
 ```sh
 cd demo/hello-world
-tsc && browserify -o built/bundle.js build/index.js && open index.html
+tsc && browserify -o built/bundle.js built/index.js && open index.html
 ```
 
-### Inetgrated with Redux
+### Inetgrated with flux
 
 ```sh
-cd demo/integrate-with-redux
-tsc && browserify -o built/bundle.js build/index.js && open index.html
+cd demo/simple-flux-app/
+tsc && browserify -o built/bundle.js built/index.js && open index.html
 ```
 
 ### Variety of Query
 
 ```sh
 cd demo/variety-of-query
-tsc && browserify -o built/bundle.js build/index.js && open index.html
+tsc && browserify -o built/bundle.js built/index.js && open index.html
 ```
