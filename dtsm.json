@@ -21,6 +21,12 @@
     },
     "flux/flux.d.ts": {
       "ref": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "falcor/falcor.d.ts": {
+      "ref": "544a35a10866b32afda9c7f029c0764558563f4f"
+    },
+    "falcor-http-datasource/falcor-http-datasource.d.ts": {
+      "ref": "544a35a10866b32afda9c7f029c0764558563f4f"
     }
   }
 }

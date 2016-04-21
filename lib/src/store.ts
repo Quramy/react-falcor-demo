@@ -8,8 +8,8 @@ export interface StoreCreateParam {
 
 export default class Store extends Falcor.Model {
     private emitter: EventEmitter;
-    constructor(option: StoreCreateParam) {
-        var opt: StoreCreateParam = option;
+    constructor(option: Falcor.ModelOptions) {
+        var opt: Falcor.ModelOptions = option;
         var originalCallback = option.onChange || (() => {});
         opt.onChange = () => {
             this.emitter && this.emitter.emit('change');

@@ -15,7 +15,7 @@
   "author": "Quramy",
   "license": "MIT",
   "dependencies": {
-    "falcor": "^0.1.16",
+    "falcor": "^0.1.17",
     "falcor-http-datasource": "^0.1.3",
     "flux": "^2.1.1",
     "react": "^0.14.7",
