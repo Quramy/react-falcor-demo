@@ -7,5 +7,6 @@
         "sourceMap": false,
         "outDir": "built",
         "rootDir": "src"
-    }
+    },
+    "exclude": ["test", "built"]
 }

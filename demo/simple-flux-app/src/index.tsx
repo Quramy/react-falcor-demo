@@ -48,21 +48,23 @@ const countUpAction = (value: number) => {
 
 // Component
 class App extends React.Component<{count: number, dispatch: (action: Action<any>) => void}, {}> {
-    countUp() {
-        this.props.dispatch(countUpAction(this.props.count + 1));
-    }
+
     render() {
-        var {count} = this.props;
+        const {count} = this.props;
+        const countUp = this.countUp.bind(this);
         return (
             <div>
-                <p>
-                This is simple demonstation of Falcor, React and flux.
-                </p>
-                <button onClick={this.countUp.bind(this)}>Click + 1</button>
+                <p>This is simple demonstation of Falcor, React and flux.</p>
+                <button onClick={countUp}>Click + 1</button>
                 <span>{count}</span>
             </div>
         );
     }
+
+    countUp() {
+        this.props.dispatch(countUpAction(this.props.count + 1));
+    }
+
 }
 
 // App Container

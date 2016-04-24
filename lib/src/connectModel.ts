@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Falcor from 'falcor';
 import Store from './store';
 import {toArray} from './util';
 
@@ -14,9 +15,8 @@ export interface ModelToProps<T> {
 
 function parse(modelToProps?: ModelToProps<any>) {
     return Object.keys(modelToProps).map(stateKey => {
-        var queryObj = modelToProps[stateKey];
-        var query: string, toArray = false;
-        var fn: Function;
+        const queryObj = modelToProps[stateKey];
+        let query: string, fn: Function;
         if(typeof queryObj === 'string') {
             fn = (props: any) => {
                 return {
@@ -25,7 +25,7 @@ function parse(modelToProps?: ModelToProps<any>) {
                 }
             };
         }else if(typeof queryObj === 'object') {
-            var obj = queryObj as QueryHolder;
+            const obj = queryObj as QueryHolder;
             fn = (props: any) => {
                 return {
                     query: obj.query,
@@ -43,12 +43,12 @@ function parse(modelToProps?: ModelToProps<any>) {
     });
 }
 
-interface ContainerState {
+export interface ContainerState {
     $loading: boolean;
     [key: string]: any;
 }
 
-class Container extends React.Component<{[propKey: string]: any}, ContainerState> {
+export class ModelContainer extends React.Component<{[propKey: string]: any}, ContainerState> {
 
     state = { $loading: true };
 
@@ -64,28 +64,35 @@ class Container extends React.Component<{[propKey: string]: any}, ContainerState
         this.queries = parse(modelToProps);
     }
 
+    graphToState(query: {stateKey: string; queryFn: (props: any) => QueryHolder}) {
+        const stateKey = query.stateKey;
+        const queryHolder = query.queryFn(this.props);
+
+        const handler = (res: Falcor.JSONEnvelope<any>) => {
+            const json = res.json;
+            const newState: ContainerState = {$loading: false};
+            let value: any;
+            if(!json) return;
+            if(typeof queryHolder.handler === 'function') {
+                value = queryHolder.handler(res);
+            }else{
+                value = queryHolder.toArray ? toArray(json[stateKey]): json[stateKey];
+            }
+            newState[stateKey] = value;
+            return newState;
+        };
+        return handler;
+    }
+
     componentDidMount() {
         this.queries.forEach(q => {
-            var stateKey = q.stateKey;
-            var queryHolder = q.queryFn(this.props);
+            const graphToState = this.graphToState(q);
+            const handler = (res: Falcor.JSONEnvelope<any>) => this.setState(graphToState(res));
+            const query = q.queryFn(this.props).query;
 
-            var handler = (res => {
-                var json = res.json;
-                var newState: ContainerState = {$loading: false};
-                var value: any;
-                if(!json) return;
-                if(typeof queryHolder.handler === 'function') {
-                    value = queryHolder.handler(res);
-                }else{
-                    value = queryHolder.toArray ? toArray(json[stateKey]): json[stateKey];
-                }
-                newState[stateKey] = value;
-                this.setState(newState);
-            });
+            this.unregisters.push(this.model.addChangeListener(query, handler));
 
-            this.unregisters.push(this.model.addChangeListener(queryHolder.query, handler));
-
-            this.model.get(queryHolder.query).then((res) => handler(res));
+            this.model.get(query).then((res) => handler(res));
         });
     }
 
@@ -94,7 +101,7 @@ class Container extends React.Component<{[propKey: string]: any}, ContainerState
     }
 
     render() {
-        var props = {};
+        const props = {};
         if(this.props) {
             Object.keys(this.props).forEach(key => {
                 props[key] = this.props[key];
@@ -114,7 +121,7 @@ class Container extends React.Component<{[propKey: string]: any}, ContainerState
 export class ContainerBase extends React.Component<any, any>{}
 
 export default function connectModel<T>(delegate: typeof React.Component, model: Store, modelToProps: ModelToProps<T>) {
-    return class extends Container {
+    return class extends ModelContainer {
         constructor() {
             super(model, modelToProps, delegate);
         }
