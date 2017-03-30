@@ -17,12 +17,12 @@
   "dependencies": {
     "falcor": "^0.1.17",
     "falcor-http-datasource": "^0.1.3",
-    "flux": "^2.1.1",
-    "mocha": "^2.4.5",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "flux": "^3.1.2",
+    "mocha": "^3.2.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "react-addons-test-utils": "0.14.7"
+    "react-addons-test-utils": "15.4.2"
   }
 }
