@@ -1,5 +1,7 @@
 # react-falcor-demo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Quramy/react-falcor-demo.svg)](https://greenkeeper.io/)
+
 This is a working demonstration of [Falcor](http://netflix.github.io/falcor/) and [React](https://facebook.github.io/react/).
 
 ## How to run
